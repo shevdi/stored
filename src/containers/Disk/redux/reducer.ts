@@ -1,8 +1,10 @@
 import * as types from './types';
 
 const initialState: types.IState = {
+  folderName: '',
+  folderPath: '/',
   resources: [],
-}
+};
 
 const disk = (state = initialState, action: types.IActions) => {
   switch (action.type) {
@@ -16,7 +18,7 @@ const disk = (state = initialState, action: types.IActions) => {
     case 'DISK:GET-RESOURCES-SUCCESS': {
       return {
         ...state,
-        resources: action.payload,
+        ...action.payload,
       };
     }
 

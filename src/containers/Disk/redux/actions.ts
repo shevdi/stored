@@ -1,7 +1,7 @@
 import * as types from './types';
 
-export function getResources(): types.IGetResourcesRequest {
-  return { type: 'DISK:GET-RESOURCES-REQUEST' };
+export function getResources(path?: string): types.IGetResourcesRequest {
+  return { type: 'DISK:GET-RESOURCES-REQUEST', payload: path };
 }
 
 export function getResourcesSuccess(payload: any): types.IGetResourcesSuccess {

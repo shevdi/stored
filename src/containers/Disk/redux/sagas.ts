@@ -12,9 +12,9 @@ function* getDiskInfoSaga() {
   }
 }
 
-function* getResourcesSaga({ api }: IDependencies) {
+function* getResourcesSaga({ api }: IDependencies, { payload = '/' }: types.IGetResourcesRequest) {
   try {
-    const response = yield call(api.getResources, encodeURI('/'));
+    const response = yield call(api.getResources, encodeURI(payload));
     yield put(actions.getResourcesSuccess(response));
   } catch (error) {
     yield put(actions.getResourcesError(error.message));

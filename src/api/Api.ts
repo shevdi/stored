@@ -21,7 +21,11 @@ class Api {
   public async getResources(path: string) {
     const url = urls.resources;
     const data = await this.actions.get<any>(url, { path });
-    return data.data._embedded.items;
+    return {
+      folderName: data.data.name,
+      folderPath: data.data.path,
+      resources: data.data._embedded.items,
+    };
   }
 
   @bind

@@ -15,9 +15,11 @@ export interface IDir extends IResource {
   type: 'dir';
 }
 
-export type Resource = Array<IFile | IDir>;
+export type Resource = File | IDir;
 
 export interface IState {
+  folderName: string;
+  folderPath: string;
   resources: Resource[];
 }
 
@@ -37,6 +39,7 @@ export interface IGetDiskInfoError {
 
 export interface IGetResourcesRequest {
   type: 'DISK:GET-RESOURCES-REQUEST';
+  payload?: string;
 }
 
 export interface IGetResourcesSuccess {
