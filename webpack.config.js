@@ -4,11 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
-    'babel-polyfill',
-    './src/index.jsx',
+    './src/index.tsx',
   ],
   module: {
     rules: [{
+      test: /\.(ts|tsx)$/,
+      use: 'ts-loader',
+    }, {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
       use: ['babel-loader', 'eslint-loader'],
@@ -61,7 +63,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: [
       path.resolve(__dirname, 'src'),
       path.resolve(__dirname, 'node_modules'),

@@ -39,6 +39,12 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "@types/history": "^4.7.2",
+    "@types/node": "^10.12.5",
+    "@types/react": "^16.7.1",
+    "@types/react-dom": "^16.0.9",
+    "@types/react-redux": "^6.0.9",
+    "@types/react-router": "^4.4.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "decko": "^1.2.0",
@@ -57,6 +63,12 @@
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-saga": "^0.16.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "ts-loader": "^5.3.0",
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-loader": "^3.5.4",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.1.6"
   }
 }

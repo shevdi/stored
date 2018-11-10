@@ -1,33 +1,35 @@
-import React, { PureComponent, Fragment } from 'react';
+import * as React from 'react';
 import { Router, Route, Switch } from 'react-router';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import HomePage from '../pages/Home';
 import Header from '../components/Header';
+import { createBrowserHistory } from 'history';
 
-class App extends PureComponent {
+const history = createBrowserHistory();
+
+interface IProps {
+  isActivePreloader: boolean;
+}
+
+class App extends React.PureComponent<IProps> {
   render() {
     return (
-      <Fragment>
+      <React.Fragment>
         {this.props.isActivePreloader ? <div>Loading ...</div> : (
-          <Router history={this.props.history}>
-            <Fragment>
+          <Router history={history}>
+            <React.Fragment>
               <Header />
 
               <Switch>
                 <Route exact path="/" component={HomePage} />
               </Switch>
-            </Fragment>
+            </React.Fragment>
           </Router>
         )}
-      </Fragment>
+      </React.Fragment>
     );
   }
 }
-
-App.propTypes = {
-  isActivePreloader: PropTypes.bool,
-};
 
 export default connect(
   () => ({

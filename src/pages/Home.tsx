@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
-class HomePage extends PureComponent {
+class HomePage extends React.PureComponent {
   render() {
     return (
       <div className="content">
