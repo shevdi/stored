@@ -1,10 +1,12 @@
 import * as React from 'react';
 
+import Header from '../components/Header';
+
 class HomePage extends React.PureComponent {
-  render() {
+  public render() {
     return (
-      <div className="content">
-        Content
+      <div>
+        <Header isLogged={true} />
       </div>
     );
   }
