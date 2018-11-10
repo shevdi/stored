@@ -1,5 +1,5 @@
 import { takeLatest } from 'redux-saga/effects';
-import * as AUTH from './actionTypes';
+import * as types from './types';
 
 function* loginSaga() {
   try {
@@ -10,7 +10,8 @@ function* loginSaga() {
 }
 
 function* userSaga() {
-  yield takeLatest(AUTH.LOGIN, loginSaga);
+  const loginType: types.ILoginRequest['type'] = 'DISK:LOGIN-REQUEST';
+  yield takeLatest(loginType, loginSaga);
 }
 
 export default userSaga;
