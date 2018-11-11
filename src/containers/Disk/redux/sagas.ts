@@ -3,10 +3,11 @@ import { takeLatest, put, call } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as types from './types';
 import { IDependencies } from 'types';
+import { stripAppPath } from 'utils';
 
 function* getResourcesSaga({ api }: IDependencies, { payload = '/' }: types.IGetResourcesRequest) {
   try {
-    const response = yield call(api.getResources, encodeURI(payload));
+    const response = yield call(api.getResources, encodeURI(stripAppPath(payload)));
     yield put(actions.getResourcesSuccess(response));
   } catch (error) {
     yield put(actions.getResourcesError(error.message));
