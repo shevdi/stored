@@ -1,8 +1,6 @@
 import * as types from './types';
 
 const initialState: types.IState = {
-  folderName: '',
-  folderPath: '/',
   resources: [],
 };
 

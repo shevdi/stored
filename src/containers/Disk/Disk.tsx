@@ -2,26 +2,37 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bind } from 'decko';
 import { ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
+import * as H from 'history';
+import * as bytes from 'bytes';
 
 import { IReduxState } from 'types';
 import { types, actions } from './redux';
 
 interface IProps {
   resources: types.Resource[];
-  folderPath: string;
+  location: string;
+  history: H.History;
   getResources: (path?: string) => void;
 }
 
 class Disk extends React.PureComponent<IProps> {
   public componentDidMount() {
-    this.props.getResources();
+    const { getResources, location } = this.props;
+    getResources(location);
+  }
+
+  public componentDidUpdate(prevProps: IProps) {
+    const { getResources, location } = this.props;
+    if (prevProps.location !== location) {
+      getResources(location);
+    }
   }
 
   public render() {
-    const { resources, folderPath } = this.props;
+    const { resources, location } = this.props;
     return (
       <ListGroup>
-        {folderPath.split('/')[1] && (
+        {location.split('/')[1] && (
           <ListGroupItem onClick={this.moveUp}>
             <Glyphicon glyph="align-left glyphicon glyphicon-folder-open" />
             &nbsp;
@@ -30,10 +41,11 @@ class Disk extends React.PureComponent<IProps> {
         )}
         {resources.map((resource, index) => {
           return (
-            <ListGroupItem key={index} onClick={this.openFolderHandler(resource)}>
+            <ListGroupItem key={index} onClick={this.openFolder(resource)}>
               {resource.type === 'dir' && <Glyphicon glyph="align-left glyphicon glyphicon-folder-close" />}
               &nbsp;
               {resource.name}
+              {resource.type === 'file' && ` - ${bytes(resource.size)}`}
             </ListGroupItem>
           );
         })}
@@ -42,27 +54,26 @@ class Disk extends React.PureComponent<IProps> {
   }
 
   @bind
-  private openFolderHandler(resource: types.Resource) {
+  private openFolder(resource: types.Resource) {
     if (resource.type === 'dir') {
+      const path = (resource as types.IDir).path.slice(5);
       return () => {
-        const { getResources } = this.props;
-        getResources((resource as types.IDir).path.slice(5));
+        this.props.history.push(path);
       };
     }
   }
 
   @bind
   private moveUp() {
-    const { folderPath, getResources } = this.props;
-    const pathParts = folderPath.split('/');
-    const path = folderPath.slice(5, -pathParts[pathParts.length - 1].length);
-    getResources(path);
+    const { location } = this.props;
+    const pathParts = location.split('/');
+    const path = location.slice(0, -pathParts[pathParts.length - 1].length);
+    this.props.history.push(path);
   }
 }
 
 const mapStateToProps = (state: IReduxState) => ({
   resources: state.disk.resources,
-  folderPath: state.disk.folderPath,
 });
 
 const mapDispatchToProps = {

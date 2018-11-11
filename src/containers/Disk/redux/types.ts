@@ -5,6 +5,7 @@ export interface IFile {
 export interface IResource {
   name: string;
   path: string;
+  size: number;
 }
 
 export interface IFile extends IResource {
@@ -18,8 +19,6 @@ export interface IDir extends IResource {
 export type Resource = File | IDir;
 
 export interface IState {
-  folderName: string;
-  folderPath: string;
   resources: Resource[];
 }
 

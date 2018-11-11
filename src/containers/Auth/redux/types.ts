@@ -1,24 +1,26 @@
 
 export interface ILoginRequest {
-  type: 'DISK:LOGIN-REQUEST';
+  type: 'AUTH:LOGIN-REQUEST';
 }
 
 export interface ILoginSuccess {
-  type: 'DISK:LOGIN-SUCCESS';
+  type: 'AUTH:LOGIN-SUCCESS';
+  payload: string;
 }
 
 export interface ILoginError {
-  type: 'DISK:LOGIN-ERROR';
+  type: 'AUTH:LOGIN-ERROR';
+  error: Error;
 }
 
 export interface ILogoutRequest {
-  type: 'DISK:LOGOUT-REQUEST';
+  type: 'AUTH:LOGOUT-REQUEST';
 }
 
 export interface ILogoutSuccess {
-  type: 'DISK:LOGOUT-SUCCESS';
+  type: 'AUTH:LOGOUT-SUCCESS';
 }
 
 export interface ILogoutError {
-  type: 'DISK:LOGOUT-ERROR';
+  type: 'AUTH:LOGOUT-ERROR';
 }

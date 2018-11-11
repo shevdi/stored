@@ -5,7 +5,7 @@ import AxiosStatic from 'axios';
 class HttpActions {
   private request: Axios.AxiosInstance;
 
-  constructor(baseURL: string) {
+  constructor(baseURL: string, auth?: string) {
     const baseConfig: Axios.AxiosRequestConfig = {
       baseURL,
       withCredentials: false,
@@ -14,7 +14,7 @@ class HttpActions {
     this.request = AxiosStatic.create(baseConfig);
 
     this.request.interceptors.request.use((config) => {
-      config.headers.Authorization = `OAuth AQAAAAAtu5B_AAVJ1NgpycdQKU93jKLRQCisDFw`;
+      config.headers.Authorization = auth;
       return config;
     });
   }

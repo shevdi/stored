@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
 import Api from 'api/Api';
-import { sagas as authSaga, reducer as auth } from 'store/auth';
+import { sagas as authSaga, reducer as auth } from 'containers/Auth/redux';
 import { sagas as diskSaga, reducer as disk } from 'containers/Disk/redux';
 
 const app = combineReducers({

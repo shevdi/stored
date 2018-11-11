@@ -1,31 +1,20 @@
 import * as React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 
-interface IProps {
-  isLogged: boolean;
-}
+import Auth from 'containers/Auth/Auth';
 
-const Header = ({ isLogged }: IProps) => {
+
+const Header = () => {
   return (
     <Navbar inverse collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">React-Bootstrap</a>
+          <a href="/">Stored</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Nav pullRight>
-          { isLogged ? (
-            <NavItem eventKey={2} href="#">
-              Logout
-            </NavItem>
-          ) : (
-            <NavItem eventKey={1} href="#">
-              Login
-            </NavItem>
-          )}
-        </Nav>
+        <Auth />
       </Navbar.Collapse>
     </Navbar>
   );
