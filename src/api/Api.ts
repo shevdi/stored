@@ -7,23 +7,27 @@ import config from './config';
 class Api {
   protected actions: HttpActions;
   protected authActions: HttpActions;
+  protected token: string;
 
   constructor() {
-    this.actions = new HttpActions(urls.baseDiskUrl, `OAuth AQAAAAAtu5B_AAVJ1NgpycdQKU93jKLRQCisDFw`);
     this.authActions = new HttpActions(urls.baseAuthUrl, `Basic ${config.clientId}:${config.clientSecret}`);
   }
 
   @bind
-  public async authorize(code: string) {
-    const url = urls.token;
-    const data = await this.authActions.post<any>(
-      url,
-      {
-        grant_type: 'authorization_code',
-        code,
-      },
-    );
-    return data;
+  public authorize(token: string) {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+    const accessToken = localStorage.getItem('token');
+    this.actions = new HttpActions(urls.baseDiskUrl, `OAuth ${accessToken}`);
+    if (accessToken) {
+      return accessToken;
+    }
+  }
+
+  @bind
+  public unauthorize() {
+    localStorage.removeItem('token');
   }
 
   @bind
@@ -37,11 +41,7 @@ class Api {
   public async getResources(path: string) {
     const url = urls.resources;
     const data = await this.actions.get<any>(url, { path });
-    return {
-      folderName: data.data.name,
-      folderPath: data.data.path,
-      resources: data.data._embedded.items,
-    };
+    return data.data._embedded.items;
   }
 
   @bind

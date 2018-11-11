@@ -6,18 +6,21 @@ const initialState: types.IState = {
 
 const disk = (state = initialState, action: types.IActions) => {
   switch (action.type) {
-    case 'DISK:GET-DISK-INFO-SUCCESS': {
+    case 'DISK:GET_DISK_INFO_SUCCESS': {
       return {
         ...state,
-        ...action.payload,
       };
     }
 
-    case 'DISK:GET-RESOURCES-SUCCESS': {
+    case 'DISK:GET_RESOURCES_SUCCESS': {
       return {
         ...state,
-        ...action.payload,
+        resources: action.payload,
       };
+    }
+
+    case 'DISK:RESET_STATE': {
+      return initialState;
     }
 
     default: {

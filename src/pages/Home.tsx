@@ -9,7 +9,7 @@ class HomePage extends React.PureComponent<RouteComponentProps> {
   public render() {
     return (
       <div>
-        <Header />
+        <Header history={this.props.history} />
         <Grid>
           <Disk
             location={this.props.location.pathname}

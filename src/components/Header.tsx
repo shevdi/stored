@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { Navbar } from 'react-bootstrap';
+import * as H from 'history';
 
 import Auth from 'containers/Auth/Auth';
 
+interface IProps {
+  history: H.History;
+}
 
-const Header = () => {
+const Header = (props: IProps) => {
   return (
     <Navbar inverse collapseOnSelect>
       <Navbar.Header>
@@ -14,10 +18,10 @@ const Header = () => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Auth />
+        <Auth history={props.history} />
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
 
 export default Header;

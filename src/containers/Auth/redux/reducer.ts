@@ -1,20 +1,22 @@
-const getInitialState = () => ({
-  showPopup: false,
-});
+import { IState, actionTypes } from './types';
 
-const auth = (state = getInitialState(), action: any) => {
+const initialState: IState = {
+  token: '',
+};
+
+const auth = (state: IState = initialState, action: actionTypes) => {
   switch (action.type) {
-    case 'SHOW_AUTH_POPUP': {
+    case 'AUTH:LOGIN_SUCCESS': {
       return {
         ...state,
-        showPopup: true,
+        token: action.payload || '',
       };
     }
 
-    case 'HIDE_AUTH_POPUP': {
+    case 'AUTH:LOGOUT': {
       return {
         ...state,
-        showPopup: false,
+        token: '',
       };
     }
 

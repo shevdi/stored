@@ -9,7 +9,7 @@ import { IReduxState } from 'types';
 import { types, actions } from './redux';
 
 interface IProps {
-  resources: types.Resource[];
+  resources: Array<types.IDir | types.IFile>;
   location: string;
   history: H.History;
   getResources: (path?: string) => void;
@@ -30,6 +30,10 @@ class Disk extends React.PureComponent<IProps> {
 
   public render() {
     const { resources, location } = this.props;
+    if (resources.length === 0) {
+      return null;
+    }
+
     return (
       <ListGroup>
         {location.split('/')[1] && (
@@ -39,28 +43,44 @@ class Disk extends React.PureComponent<IProps> {
             ...
           </ListGroupItem>
         )}
-        {resources.map((resource, index) => {
-          return (
-            <ListGroupItem key={index} onClick={this.openFolder(resource)}>
-              {resource.type === 'dir' && <Glyphicon glyph="align-left glyphicon glyphicon-folder-close" />}
-              &nbsp;
-              {resource.name}
-              {resource.type === 'file' && ` - ${bytes(resource.size)}`}
-            </ListGroupItem>
-          );
-        })}
+        {resources.map((resource) => resource.type === 'dir'
+          ? this.renderDir(resource)
+          : this.renderFile(resource),
+        )}
       </ListGroup>
     );
   }
 
   @bind
+  private renderDir(resource: types.IDir) {
+    return (
+      <ListGroupItem key={resource.resource_id} onClick={this.openFolder(resource)}>
+        {<Glyphicon glyph="align-left glyphicon glyphicon-folder-close" />}
+        &nbsp;
+        <b>{resource.name}</b>
+      </ListGroupItem>
+    );
+  }
+
+  @bind
+  private renderFile(resource: types.IFile) {
+    return (
+      <a href={resource.file} key={resource.resource_id}>
+        <ListGroupItem>
+          &nbsp;
+          <b>{resource.name}</b>
+          {resource.type === 'file' && ` - ${bytes(resource.size)}`}
+        </ListGroupItem>
+      </a>
+    );
+  }
+
+  @bind
   private openFolder(resource: types.Resource) {
-    if (resource.type === 'dir') {
-      const path = (resource as types.IDir).path.slice(5);
-      return () => {
-        this.props.history.push(path);
-      };
-    }
+    const path = (resource as types.IDir).path.slice(5);
+    return () => {
+      this.props.history.push(path);
+    };
   }
 
   @bind

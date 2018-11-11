@@ -1,26 +1,24 @@
+export interface IState {
+  token: string;
+}
 
 export interface ILoginRequest {
-  type: 'AUTH:LOGIN-REQUEST';
+  type: 'AUTH:LOGIN_REQUEST';
+  payload?: string;
 }
 
 export interface ILoginSuccess {
-  type: 'AUTH:LOGIN-SUCCESS';
-  payload: string;
+  type: 'AUTH:LOGIN_SUCCESS';
+  payload?: string;
 }
 
 export interface ILoginError {
-  type: 'AUTH:LOGIN-ERROR';
+  type: 'AUTH:LOGIN_ERROR';
   error: Error;
 }
 
-export interface ILogoutRequest {
-  type: 'AUTH:LOGOUT-REQUEST';
+export interface ILogout {
+  type: 'AUTH:LOGOUT';
 }
 
-export interface ILogoutSuccess {
-  type: 'AUTH:LOGOUT-SUCCESS';
-}
-
-export interface ILogoutError {
-  type: 'AUTH:LOGOUT-ERROR';
-}
+export type actionTypes = ILoginRequest | ILoginSuccess | ILoginError | ILogout;

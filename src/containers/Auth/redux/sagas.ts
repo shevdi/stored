@@ -4,18 +4,24 @@ import { IDependencies } from 'types';
 import * as types from './types';
 import * as actions from './actions';
 
-function* loginSaga({ api }: IDependencies) {
+function* loginSaga({ api }: IDependencies, { payload }: types.ILoginRequest) {
   try {
-    const response = yield call(api.authorize, '6027283');
+    const response: string = yield call(api.authorize, payload);
     yield put(actions.loginSuccess(response));
   } catch (error) {
-    yield put(actions.loginError(error.message))
+    yield put(actions.loginError(error.message));
   }
 }
 
+function* logoutSaga({ api }: IDependencies) {
+  yield call(api.unauthorize);
+}
+
 function* userSaga(deps: IDependencies) {
-  const loginType: types.ILoginRequest['type'] = 'AUTH:LOGIN-REQUEST';
+  const loginType: types.ILoginRequest['type'] = 'AUTH:LOGIN_REQUEST';
+  const logoutType: types.ILogout['type'] = 'AUTH:LOGOUT';
   yield takeLatest(loginType, loginSaga, deps);
+  yield takeLatest(logoutType, logoutSaga, deps);
 }
 
 export default userSaga;

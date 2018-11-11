@@ -4,14 +4,6 @@ import * as actions from './actions';
 import * as types from './types';
 import { IDependencies } from 'types';
 
-function* getDiskInfoSaga() {
-  try {
-    yield 0;
-  } catch (e) {
-    yield -1;
-  }
-}
-
 function* getResourcesSaga({ api }: IDependencies, { payload = '/' }: types.IGetResourcesRequest) {
   try {
     const response = yield call(api.getResources, encodeURI(payload));
@@ -21,11 +13,14 @@ function* getResourcesSaga({ api }: IDependencies, { payload = '/' }: types.IGet
   }
 }
 
+function* resetStateSaga() {
+  yield put(actions.resetDiskState());
+}
+
 function* userSaga(deps: IDependencies) {
-  const getDiskInfoType: types.IGetDiskInfoRequest['type'] = 'DISK:GET-DISK-INFO-REQUEST';
-  const getResourcesType: types.IGetResourcesRequest['type'] = 'DISK:GET-RESOURCES-REQUEST';
-  yield takeLatest(getDiskInfoType, getDiskInfoSaga);
+  const getResourcesType: types.IGetResourcesRequest['type'] = 'DISK:GET_RESOURCES_REQUEST';
   yield takeLatest(getResourcesType, getResourcesSaga, deps);
+  yield takeLatest('AUTH:LOGOUT', resetStateSaga, deps);
 }
 
 export default userSaga;

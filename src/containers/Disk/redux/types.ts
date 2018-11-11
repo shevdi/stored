@@ -6,6 +6,8 @@ export interface IResource {
   name: string;
   path: string;
   size: number;
+  file: string;
+  resource_id: string;
 }
 
 export interface IFile extends IResource {
@@ -19,37 +21,41 @@ export interface IDir extends IResource {
 export type Resource = File | IDir;
 
 export interface IState {
-  resources: Resource[];
+  resources: Array<IFile | IDir>;
 }
 
 export interface IGetDiskInfoRequest {
-  type: 'DISK:GET-DISK-INFO-REQUEST';
+  type: 'DISK:GET_DISK_INFO_REQUEST';
 }
 
 export interface IGetDiskInfoSuccess {
-  type: 'DISK:GET-DISK-INFO-SUCCESS';
+  type: 'DISK:GET_DISK_INFO_SUCCESS';
   payload: any;
 }
 
 export interface IGetDiskInfoError {
-  type: 'DISK:GET-DISK-INFO_ERROR';
+  type: 'DISK:GET_DISK_INFO_ERROR';
   error: string;
 }
 
 export interface IGetResourcesRequest {
-  type: 'DISK:GET-RESOURCES-REQUEST';
+  type: 'DISK:GET_RESOURCES_REQUEST';
   payload?: string;
 }
 
 export interface IGetResourcesSuccess {
-  type: 'DISK:GET-RESOURCES-SUCCESS';
+  type: 'DISK:GET_RESOURCES_SUCCESS';
   payload: any;
 }
 
 export interface IGetResourcesError {
-  type: 'DISK:GET-RESOURCES_ERROR';
+  type: 'DISK:GET_RESOURCES_ERROR';
   error: string;
 }
 
+export interface IResetDiskState {
+  type: 'DISK:RESET_STATE';
+}
+
 export type IActions = IGetDiskInfoRequest | IGetDiskInfoSuccess | IGetDiskInfoError
-  | IGetResourcesRequest | IGetResourcesSuccess | IGetResourcesError;
+  | IGetResourcesRequest | IGetResourcesSuccess | IGetResourcesError | IResetDiskState;
