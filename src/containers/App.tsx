@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Router, Route, Switch } from 'react-router';
+import { Router, Route, Switch, Redirect } from 'react-router';
 import { createBrowserHistory } from 'history';
 
 import HomePage from '../pages/Home';
@@ -12,6 +12,7 @@ class App extends React.PureComponent {
     return (
       <Router history={history}>
         <Switch>
+          <Redirect exact from="/" to={config.appPath} />
           <Route path={config.appPath} component={HomePage} />
         </Switch>
       </Router>
