@@ -5,7 +5,7 @@ import { Nav, NavItem } from 'react-bootstrap';
 
 import { IReduxState } from 'types';
 import { actions } from './redux';
-import config from 'api/config';
+import config from 'config';
 
 interface IProps {
   isLogged: boolean;
@@ -18,7 +18,7 @@ class Auth extends React.PureComponent<IProps> {
   public componentDidMount() {
     if (location.hash) {
       const token = /access_token=([^&]+)/.exec(location.hash);
-      this.props.history.replace('/');
+      this.props.history.replace(config.appPath);
       if (token) {
         this.props.login(token[1]);
       }

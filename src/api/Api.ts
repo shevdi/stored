@@ -2,7 +2,8 @@ import { bind } from 'decko';
 
 import HttpActions from './HttpActions';
 import urls from './urls';
-import config from './config';
+import config from '../config';
+import { stripAppPath } from 'utils/helpers';
 
 class Api {
   protected actions: HttpActions;
@@ -40,7 +41,7 @@ class Api {
   @bind
   public async getResources(path: string) {
     const url = urls.resources;
-    const data = await this.actions.get<any>(url, { path });
+    const data = await this.actions.get<any>(url, { path: stripAppPath(path) });
     return data.data._embedded.items;
   }
 

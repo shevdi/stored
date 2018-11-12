@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
 import * as H from 'history';
 import * as bytes from 'bytes';
 
+import config from 'config';
 import { IReduxState } from 'types';
 import { types, actions } from './redux';
 
@@ -35,7 +36,7 @@ class Disk extends React.PureComponent<IProps> {
     }
     return (
       <ListGroup>
-        {location.split('/')[1] && (
+        {location.split(`${config.appPath}/`)[1] && (
           <ListGroupItem onClick={this.moveUp}>
             <Glyphicon glyph="align-left glyphicon glyphicon-folder-open" />
             &nbsp;
@@ -78,7 +79,7 @@ class Disk extends React.PureComponent<IProps> {
   private openFolder(resource: types.Resource) {
     const path = (resource as types.IDir).path.slice(5);
     return () => {
-      this.props.history.push(path);
+      this.props.history.push(config.appPath + path);
     };
   }
 
@@ -87,7 +88,7 @@ class Disk extends React.PureComponent<IProps> {
     const { location } = this.props;
     const pathParts = location.split('/');
     const path = location.slice(0, -pathParts[pathParts.length - 1].length);
-    this.props.history.push(path);
+    this.props.history.push(path || config.appPath);
   }
 }
 
