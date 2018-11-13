@@ -9,6 +9,7 @@ function* getResourcesSaga({ api }: IDependencies, { payload = '/' }: types.IGet
     const response = yield call(api.getResources, encodeURI(payload));
     yield put(actions.getResourcesSuccess(response));
   } catch (error) {
+    debugger;
     yield put(actions.getResourcesError(error.message));
   }
 }

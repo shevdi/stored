@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bind } from 'decko';
-import { ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Glyphicon, Alert } from 'react-bootstrap';
 import * as H from 'history';
 import * as bytes from 'bytes';
 
@@ -13,6 +13,7 @@ interface IProps {
   resources: Array<types.IDir | types.IFile>;
   location: string;
   history: H.History;
+  error: '';
   getResources: (path?: string) => void;
 }
 
@@ -30,7 +31,11 @@ class Disk extends React.PureComponent<IProps> {
   }
 
   public render() {
-    const { resources, location } = this.props;
+    const { resources, location, error } = this.props;
+
+    if (error) {
+      return <Alert bsStyle="warning">{error}</Alert>;
+    }
     if (resources.length === 0) {
       return null;
     }
@@ -93,7 +98,8 @@ class Disk extends React.PureComponent<IProps> {
 }
 
 const mapStateToProps = (state: IReduxState) => ({
-  resources: state.disk.resources,
+  resources: state.disk.data.resources,
+  error: state.disk.actions.getResources.error,
 });
 
 const mapDispatchToProps = {

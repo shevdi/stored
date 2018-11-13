@@ -2,6 +2,7 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const envs = {
   __DEV__: process.env.NODE_ENV === 'development',
@@ -68,6 +69,20 @@ module.exports = {
     }),
     new webpack.DefinePlugin(envs),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+    minimizer: [new UglifyJsPlugin({
+      sourceMap: true,
+    })],
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: [

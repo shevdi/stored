@@ -1,3 +1,5 @@
+import { IActionState } from "types";
+
 export interface IFile {
   [key: string]: any;
 }
@@ -20,8 +22,17 @@ export interface IDir extends IResource {
 
 export type Resource = File | IDir;
 
-export interface IState {
+export interface IDataState {
   resources: Array<IFile | IDir>;
+}
+
+export interface IActionsState {
+  getResources: IActionState;
+}
+
+export interface IState {
+  data: IDataState;
+  actions: IActionsState;
 }
 
 export interface IGetDiskInfoRequest {

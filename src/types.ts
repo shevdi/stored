@@ -10,3 +10,8 @@ export interface IReduxState {
   disk: IDiskState;
   auth: IAuthState;
 }
+
+export interface IActionState {
+  isRequesting: boolean;
+  error: string;
+}
